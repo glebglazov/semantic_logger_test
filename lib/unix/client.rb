@@ -1,8 +1,10 @@
 require 'semantic_logger'
 require 'socket'
 
+SOCKET_PATH = '/tmp/qwe.sock'
+
 class UNIXSocketAppender < SemanticLogger::Subscriber
-  def initialize(socket_path: '/tmp/qwe.sock', **args, &block)
+  def initialize(socket_path: SOCKET_PATH, **args, &block)
     super(**args, &block)
     @socket_path = socket_path
     @unix_socket = UNIXSocket.new(socket_path)
@@ -19,7 +21,8 @@ end
 
 SemanticLogger.add_appender(appender: UNIXSocketAppender.new)
 
-logger = SemanticLogger['Hey']
-10_000.times do
-  logger.info 'qwe\n'
+logger = SemanticLogger['Hello']
+
+Runner.call do
+  logger.info 'qwe'
 end

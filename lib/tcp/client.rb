@@ -7,6 +7,6 @@ SemanticLogger.add_appender(
 
 logger = SemanticLogger['Hello']
 
-10_000.times do
+Runner.call do
   logger.info 'Hi'
 end
