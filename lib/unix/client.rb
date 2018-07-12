@@ -4,9 +4,15 @@ require 'socket'
 SOCKET_PATH = '/tmp/qwe.sock'
 
 class UNIXSocketAppender < SemanticLogger::Subscriber
+  attr_reader :socket_path
+
   def initialize(socket_path: SOCKET_PATH, **args, &block)
     super(**args, &block)
     @socket_path = socket_path
+    reopen
+  end
+
+  def reopen
     @unix_socket = UNIXSocket.new(socket_path)
   end
 
